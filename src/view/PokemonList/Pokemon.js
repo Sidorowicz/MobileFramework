@@ -34,20 +34,20 @@ export const Pokemon = ({ pokemon, setSelectedPokemon }) => {
             case 'ice':
                 return 'lightblue'
             case 'bug':
-                return 'lightgreen'
-            case 'fire':
-                return 'red'
+                return 'lightgreen' 
             default:
                 return "grey"
         }
     }
-
+    const capitalizeFirstLetter=(string)=> {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      }
     return (
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: `${generateTypeColor(pokemonData.types)}` }} onClick={() => {
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: `${generateTypeColor(pokemonData.types)}`,m:1, border:'1px solid #666666'}} onClick={() => {
             setSelectedPokemon(pokemon)
         }}>
-            <Typography>{pokemonData.name}</Typography>
+            <Typography>{capitalizeFirstLetter(pokemonData.name)}</Typography>
             <ImageComponent url={pokemonData.sprites.front_default} />
         </Box>
 

@@ -23,7 +23,7 @@ ChartJS.register(
 
 export const Stats = ({ stats }) => {
     const data = {
-        labels: ['Hp', 'Attack', 'Defence', 'Special-Attack', 'Special-Deffence', 'Speed'],
+        labels: ['Hp', 'Attack', 'Defence', 'S-Attack', 'S-Deffence', 'Speed'],
         datasets: [
             {
                 label:"Stats",

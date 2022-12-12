@@ -1,14 +1,17 @@
 import { Button, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import React, { useMemo } from 'react'
+import axios from 'axios'
+import React, { useEffect, useMemo, useState } from 'react'
+import { Abilities } from './Abilities'
 import { AccordionComponent } from './AccordionComponent'
 import ImageComponent from './Image'
+import CloseIcon from '@mui/icons-material/Close';
 import { Stats } from './Stats'
 
 export const SelectedPokemon = ({pokemon,setSelectedPokemon}) => {
     const pokemonData = useMemo(() => { return pokemon }, [pokemon])
-    const generateTypeColor = (colorArray) => {
-        let color = colorArray[0].type.name;
+    const [forms,setForms]=useState([]); 
+    const generateTypeColor = (color) => { 
         switch (color) {
             case 'normal':
                 return 'grey'
@@ -33,23 +36,27 @@ export const SelectedPokemon = ({pokemon,setSelectedPokemon}) => {
             case 'ice':
                 return 'lightblue'
             case 'bug':
-                return 'lightgreen'
-            case 'fire':
-                return 'red'
+                return 'lightgreen' 
             default:
                 return "grey"
         }
     }
+    const capitalizeFirstLetter=(string)=> {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      }
+ 
+      
     return (
-        <Box fullWidth sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: `${generateTypeColor(pokemonData.types)}` }} >
-            <Typography sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }} >
-                {' Number ' + pokemonData.id + ' : ' + pokemonData.name + ' '}
-                <Button onClick={() => { setSelectedPokemon() }}>
-                    X
-                </Button>
+        <Box sx={{ display: 'flex',my:2, p:1,border:'2px solid grey', flexDirection: 'column', alignItems: 'center', background: `${generateTypeColor(pokemonData.types[0].type.name)}`,  }} >
+            <Typography sx={{ display: 'flex', justifyContent: 'space-between', alignItems:'center',width:'100%'}}>
+                {' Number ' + pokemonData.id + ' : ' + capitalizeFirstLetter(pokemonData.name) + ' '}
+                <CloseIcon sx={{fontSize:30}} onClick={() => { setSelectedPokemon() }}/>
             </Typography>
             <ImageComponent url={pokemonData.sprites.front_default} />
-            <AccordionComponent title={'Abilities'} desc={'abilities'} />
+            <Box sx={{display:'flex',alignItems:'center', }}> {pokemonData.types.map((type, index)=> {
+                return <Box key={index} sx={{p:1 , border: '1px solid black', borderRadius:20,mx:1, background:`${generateTypeColor(type.type.name)}`}}>{type.type.name}</Box>
+                })}</Box>
+            <AccordionComponent title={'Abilities'} desc={<Abilities pokemon={pokemon} />} />
             <AccordionComponent title={'Forms'} desc={'forms'} />
             <AccordionComponent title={'Stats'} desc={<Stats stats={pokemonData.stats} />} />
 
