@@ -41,7 +41,7 @@ export const PokemonList = () => {
             }
 
             {pokemon &&
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
+                <Box sx={{ display: 'flex', flexWrap: 'nowrap', alignItems: 'center', justifyContent: 'start', overflowX:'scroll' }}>
                     {pokemon.map(((tem, index) => { return <Pokemon pokemon={tem} key={index} setSelectedPokemon={setSelectedPokemon}/> }))}
                 </Box>
 
